@@ -637,11 +637,11 @@
     	var locations = Macro.get('newgeolocation').locations;
 
         if (!locations.hasOwnProperty(name)) {
-            throw(`no location NAME in 'distanceToLocation': ${name}`);
+            throw("no location NAME in 'distanceToLocation': ${name}");
         }
         
 		if (!State.variables.hasOwnProperty('location')) {
-            throw(`glstart has not been called, don't know our location`);
+            throw("glstart has not been called, don't know our location");
         }
         
         var location = State.variables.location;
@@ -665,7 +665,7 @@
     	var locations = Macro.get('newgeolocation').locations;
 
         if (!locations.hasOwnProperty(name)) {
-            throw(`no location NAME in 'distanceToLocation': ${name}`);
+            throw("no location NAME in 'distanceToLocation': ${name}");
         }   
         return locations[name];     
     }
@@ -704,7 +704,7 @@
 				timeout : Infinity // default: Infinity
 			},
 
-			// ID of the running `watchPosition()` method, if any.
+			// ID of the running "watchPosition()" method, if any.
 			glWatchId = null;
 
 		/*
@@ -717,7 +717,7 @@
 					return;
 				}
 
-				// If it does not already exist, we give `$location` an initial value, so
+				// If it does not already exist, we give "$location" an initial value, so
 				// trying to access it immediately does not cause issues if the first
 				// success callback takes a while—since the geolocation API is asynchronous.
 				if (!State.variables.hasOwnProperty('location')) {
@@ -746,7 +746,7 @@
 
                     svl.valid = true;
                     svl.count++;
-					// Assign the geolocation coordinate properties to the `$location` object.
+					// Assign the geolocation coordinate properties to the "$location" object.
 					svl.accuracy         = glc.accuracy;
 					svl.altitude         = glc.altitude;
 					svl.altitudeAccuracy = glc.altitudeAccuracy;
@@ -761,7 +761,7 @@
                     svl.y = svl.utm.coord.y;
                     svl.zone = svl.utm.zone;
 
-					// Trigger a global `tw:geolocationupdate` event.
+					// Trigger a global "tw:geolocationupdate" event.
 					jQuery.event.trigger('tw:geolocationupdate');
 				}
 
@@ -816,13 +816,13 @@
 		});
 
 		Macro.add('newgeolocation', {
-			handler() {
+			handler: function () {
 				if (this.args.length < 3) {
 					var errors = [];
 					if (this.args.length < 1) { errors.push('location ID'); }
 					if (this.args.length < 2) { errors.push('latitude'); }
 					if (this.args.length < 3) { errors.push('longitude'); }
-					return this.error(`no ${errors.join(' or ')} specified`);
+					return this.error("no ${errors.join(' or ')} specified");
 				}
 
 				var
@@ -833,16 +833,16 @@
                     
 
                 if (isNaN(lon) || !isFinite(lon)) {
-                    return this.error(`cannot parse longitude: ${this.args[2]}`);
+                    return this.error("cannot parse longitude: ${this.args[2]}");
                 }
                 if (isNaN(lat) || !isFinite(lat)) {
-                    return this.error(`cannot parse latitude: ${this.args[1]}`);
+                    return this.error("cannot parse latitude: ${this.args[1]}");
                 }
 
                 var utm     = converter.toUtm({coord: [lon,lat]});
 
 				if (locations.hasOwnProperty(id)) {
-					return this.error(`location ID already specified: ${id}`);
+					return this.error("location ID already specified: ${id}");
 				}
 
 			    locations[id] = {
